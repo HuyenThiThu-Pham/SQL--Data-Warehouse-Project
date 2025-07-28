@@ -9,6 +9,7 @@ Script Purpose:
 ===============================================================================
 */
 
+--This checks whether the table exists, if it does, deletes it.
 IF OBJECT_ID('bronze.crm_cust_info', 'U') IS NOT NULL
     DROP TABLE bronze.crm_cust_info;
 GO

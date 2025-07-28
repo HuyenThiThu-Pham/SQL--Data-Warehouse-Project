@@ -12,24 +12,28 @@ WARNING:
     All data in the database will be permanently deleted. Proceed with caution 
     and ensure you have proper backups before running this script.
 */
-
+-- Switch to the 'master' system database, which allows us to manage other databases
 USE master;
-GO
+GO -- Ends the batch that switches database context
 
 -- Drop and recreate the 'DataWarehouse' database
-IF EXISTS (SELECT 1 FROM sys.databases WHERE name = 'DataWarehouse')
-BEGIN
+IF EXISTS (SELECT 1 FROM sys.databases WHERE name = 'DataWarehouse') 
+    -- Set the database to SINGLE_USER mode to forcefully disconnect any active connections
+    -- 'WITH ROLLBACK IMMEDIATE' ensures any open transactions are rolled back
     ALTER DATABASE DataWarehouse SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+
+    -- Drop (delete) the existing 'DataWarehouse' database
     DROP DATABASE DataWarehouse;
 END;
 GO
 
 -- Create the 'DataWarehouse' database
 CREATE DATABASE DataWarehouse;
-GO
+GO -- Ends the batch that creates a new DB
 
+-- Switch context to use the newly created 'DataWarehouse' database
 USE DataWarehouse;
-GO
+GO -- Starts using the new DB
 
 -- Create Schemas
 CREATE SCHEMA bronze;

@@ -48,6 +48,8 @@ BEGIN
 		SET @end_time = GETDATE();
 		PRINT '>> Load Duration: ' + CAST(DATEDIFF(second, @start_time, @end_time) AS NVARCHAR) + ' seconds';
 		PRINT '>> -------------';
+		--Quality check: check that the data has not shifted and is in the correct columns
+		Select COUNT(*) from bronze.crm_cust_info
 
         SET @start_time = GETDATE();
 		PRINT '>> Truncating Table: bronze.crm_prd_info';

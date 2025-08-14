@@ -1,10 +1,27 @@
 # Data Warehouse and Analytics Project
 
 Welcome to the **Data Warehouse and Analytics Project** repository! 🚀  
-This project demonstrates a comprehensive data warehousing and analytics solution, from building a data warehouse to generating actionable insights. Designed as a portfolio project, it highlights industry best practices in data engineering and analytics.
+This project demonstrates a comprehensive data warehousing and analytics solution, from building a data warehouse to generating actionable insights. It highlights industry best practices in data engineering and analytics.
+It covers the full lifecycle — from ingesting raw data to delivering actionable business insights.
+---
+
+## 🏢 Business Context
+
+A mid-size retail company needs to integrate data from its **ERP (sales and inventory) and CRM (customer interactions)** systems to enable unified, data-driven decision-making.
+
+The business goals are:
+
+- **Single Source** of Truth for sales, customer, and product performance data.
+
+- **Improved Sales Insights** to identify high-value customers and top-performing products.
+
+- **Data Quality Assurance** to ensure clean, standardized, and analytics-ready data.
+
+This project simulates such an environment, ingesting ERP and CRM datasets in **CSV format** and transforming them into a **star schema** for analytics and reporting.
 
 ---
-## 🏗️ Data Architecture
+## 🏗️ Data Architecture & Diagrams
+### Data Architecture Diagrams
 
 The data architecture for this project follows Medallion Architecture **Bronze**, **Silver**, and **Gold** layers:
 ![Data Architecture](docs/Data_architecture.drawio(1).png)
@@ -12,6 +29,17 @@ The data architecture for this project follows Medallion Architecture **Bronze**
 1. **Bronze Layer**: Stores raw data as-is from the source systems. Data is ingested from CSV Files into SQL Server Database.
 2. **Silver Layer**: This layer includes data cleansing, standardization, and normalization processes to prepare data for analysis.
 3. **Gold Layer**: Houses business-ready data modeled into a star schema required for reporting and analytics.
+### Data Flow Diagram
+![Data Flow Diagram](docs/data_flow.drawio (1).png)
+### Data Integration Diagram
+![Data Integration Diagram](docs/data_integration.drawio.png)
+
+### ETL Process Diagram
+![ETL Process Diagram](docs/ETL.drawio.png)
+
+### Data Model (Star Schema)
+![Data Model (Star Schema)](docs/data_model.drawio.png)
+
 
 ---
 ## 📖 Project Overview
@@ -36,9 +64,9 @@ This project involves:
 ## 🛠️ Tools:
 
 
-- **[SQL Server Express](https://www.microsoft.com/en-us/sql-server/sql-server-downloads):** Lightweight server for hosting your SQL database.
+- **[SQL Server Express](https://www.microsoft.com/en-us/sql-server/sql-server-downloads):** Lightweight server for hosting the SQL database.
 - **[SQL Server Management Studio (SSMS)](https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver16):** GUI for managing and interacting with databases.
-- **[Git Repository](https://github.com/):** Set up a GitHub account and repository to manage, version, and collaborate on your code efficiently.
+- **[Git Repository](https://github.com/):** Version control and collaboration.
 - **[DrawIO](https://www.drawio.com/):** Design data architecture, models, flows, and diagrams.
 
 
@@ -99,8 +127,37 @@ data-warehouse-project/
 └── requirements.txt                    # Dependencies and requirements for the project
 ```
 ---
+## 📜 Data Catalog
+
+A detailed field-by-field data dictionary is available in:
+📄 [docs/data_catalog.md](docs/data_catalog.md)
+
+## ✅ Data Quality & Testing
+
+- **Null Checks** – Ensured no nulls in key fields.
+
+- **Duplicate Removal** – Removed duplicate customer/product records.
+
+- **Referential Integrity** – Verified fact tables reference existing dimensions.
+
+- **Data Type Validation** – Ensured numeric and date formats are consistent.
+
+## 🙌 Acknowledgements
+
+## 🙌 Acknowledgements
+
+Dataset and architecture inspiration: [Data with Baraa](https://www.youtube.com/watch?v=9GVqKuTVANE&t=11225s).
 
 
+## 🚀 Future Improvements
+
+- Automate ETL with Apache Airflow or Azure Data Factory.
+
+- Add incremental loading and historization (SCD Type 2).
+
+- Deploy to a cloud data warehouse (Snowflake, Redshift, Azure Synapse).
+
+- Create BI dashboards with Power BI/Tableau.
 
 ## 🛡️ License
 

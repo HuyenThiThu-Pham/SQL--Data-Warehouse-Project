@@ -30,7 +30,7 @@ The data architecture for this project follows Medallion Architecture **Bronze**
 2. **Silver Layer**: This layer includes data cleansing, standardization, and normalization processes to prepare data for analysis.
 3. **Gold Layer**: Houses business-ready data modeled into a star schema required for reporting and analytics.
 ### Data Flow Diagram
-![Data Flow Diagram](docs/data_flow.drawio (1).png)
+![Data Flow Diagram](docs/data_flow.drawio(1).png)
 ### Data Integration Diagram
 ![Data Integration Diagram](docs/data_integration.drawio.png)
 
@@ -40,7 +40,50 @@ The data architecture for this project follows Medallion Architecture **Bronze**
 ### Data Model (Star Schema)
 ![Data Model (Star Schema)](docs/data_model.drawio.png)
 
+## ⚙️ ETL Implementation  
 
+This section details how the Bronze, Silver, and Gold layers were implemented step-by-step.  
+
+### **1. Bronze Layer – Raw Data Ingestion**  
+- Used **BULK INSERT** to efficiently load CSV/TXT files into SQL Server tables in one operation (faster than row-by-row inserts).  
+- Created stored procedure `bronze.load_bronze` that:  
+  1. Truncates Bronze tables before loading.  
+  2. Loads data from CSV files.  
+  3. Tracks start/end time for performance logging.  
+  4. Prints status messages and handles errors via `TRY...CATCH`.  
+- Logging includes elapsed time using `DATEDIFF()` and converting values with `CAST()`.  
+
+**Best Practices Applied**:  
+- Store frequently used SQL in stored procedures for reusability.  
+- Add print logs for debugging and monitoring ETL.  
+- Implement error handling to ensure data integrity.  
+
+---
+
+### **2. Silver Layer – Data Cleansing & Transformation**  
+- Checked each column for quality and applied transformations:  
+  - Removed extra spaces with `TRIM()`.  
+  - Standardized categorical codes using `CASE WHEN`.  
+  - Replaced null values with defaults via `ISNULL()`.  
+  - Removed duplicates using `ROW_NUMBER()` and filtered to latest records.  
+  - Ensured date consistency — e.g., end date is not before start date (used `LEAD()` to derive missing end dates).  
+- Created stored procedure `silver.load_silver` that:  
+  1. Truncates Silver tables before loading.  
+  2. Inserts cleaned and transformed data.  
+  3. Prints step-by-step logs.  
+  4. Measures duration for each stage.  
+
+---
+
+### **3. Gold Layer – Analytics-Ready Data**  
+- Modeled data into a **star schema** with fact and dimension tables.  
+- Applied business aggregations for reporting:  
+  - Sales performance metrics.  
+  - Customer retention KPIs.  
+  - Product profitability analysis.  
+- Optimized for BI tools like Power BI/Tableau.  
+
+---
 ---
 ## 📖 Project Overview
 
